@@ -11,6 +11,13 @@ if [ -z "$DATABASE_URL" ]; then
 fi
 echo "📡 Database: $(echo "$DATABASE_URL" | sed -e 's/:[^:@]*@/:****@/')"
 
+case "$DATABASE_URL" in
+  *@localhost[:/]*|*@127.0.0.1[:/]*)
+    echo "⚠️  DATABASE_URL points to localhost — inside Docker that is this container, not the VPS."
+    echo "    Use the VPS IP (e.g. 43.157.212.14) or host.docker.internal instead."
+    ;;
+esac
+
 # Creates the database if missing, then applies server/db/schema.sql (idempotent).
 echo "⏳ Ensuring database & schema..."
 attempt=1
