@@ -1,0 +1,17 @@
+{
+  "name": "your-shelter-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --env-file-if-exists=.env src/index.js",
+    "start": "node --env-file-if-exists=.env src/index.js",
+    "db:migrate": "node --env-file-if-exists=.env src/migrate.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=22.9"
+  }
+}

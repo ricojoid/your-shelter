@@ -1,0 +1,22 @@
+services:
+  # -----------------------------------------------------------
+  # Your Shelter (API + web in one container)
+  # Connects to the PostgreSQL already running on the VPS (:5432).
+  # Secrets live in .env (not committed) — see .env.example
+  # -----------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yourshelter_app
+    restart: always
+    ports:
+      - "${APP_PORT:-3030}:3030"
+    env_file:
+      - .env
+    environment:
+      PORT: 3030
+      HOST: 0.0.0.0
+      NODE_ENV: production
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

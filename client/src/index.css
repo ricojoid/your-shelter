@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Plus Jakarta Sans Variable", ui-sans-serif, sans-serif;
+
+  --color-paper: #fbf6ec;   /* warm cream page */
+  --color-card: #ffffff;
+  --color-ink: #16131f;     /* outlines, text, hard shadows */
+  --color-muted: #5f5a6b;
+  --color-line: #e7dfd0;
+
+  /* Gen Z pop palette */
+  --color-grape: #8b6cff;
+  --color-lilac: #d9ccff;
+  --color-bubblegum: #ff7ac3;
+  --color-blush: #ffd3e7;
+  --color-lime: #d6f55a;
+  --color-sunny: #ffd84d;
+  --color-sky: #8fd4ff;
+  --color-tangerine: #ff9248;
+  --color-live: #1fb46b;
+
+  --shadow-pop: 3px 3px 0 0 var(--color-ink);
+  --shadow-pop-lg: 5px 5px 0 0 var(--color-ink);
+  --shadow-soft: 0 20px 50px -20px rgb(22 19 31 / 0.35);
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── The mading wall: color blobs + doodle motif + film grain ─────────────── */
+.wall {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40vmax 40vmax at 8% 12%, rgb(217 204 255 / 0.85), transparent 60%),
+    radial-gradient(34vmax 34vmax at 95% 20%, rgb(255 211 231 / 0.8), transparent 60%),
+    radial-gradient(38vmax 38vmax at 80% 95%, rgb(214 245 90 / 0.45), transparent 60%),
+    radial-gradient(30vmax 30vmax at 10% 90%, rgb(143 212 255 / 0.45), transparent 60%),
+    var(--color-paper);
+}
+.wall::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/motif.svg") repeat;
+  background-size: 320px 320px;
+}
+.wall::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/grain.svg") repeat;
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+}
+
+/* Same motif, used inside cards (composer preview, exported image) */
+.motif {
+  background-color: var(--color-paper);
+  background-image: url("./assets/motif.svg");
+  background-size: 260px 260px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+textarea {
+  field-sizing: content;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 14s linear infinite;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--r, 0deg)); }
+}
+.animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
+/* Uses `translate` (not `transform`) so it stacks with the sticky-note tilt. */
+@keyframes bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+.animate-bob {
+  animation: bob 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* White doodles on colored surfaces (hero) */
+.motif-on-dark {
+  background: #fff;
+  -webkit-mask: url("./assets/motif.svg") repeat;
+  mask: url("./assets/motif.svg") repeat;
+  -webkit-mask-size: 260px 260px;
+  mask-size: 260px 260px;
+}
